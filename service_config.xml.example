@@ -1,0 +1,6 @@
+<ServiceConfig>
+	<VideoFeedName>video</VideoFeedName>
+	<Resolution>(1280, 960)</Resolution>
+	<WriteTimestamp>True</WriteTimestamp>
+	<Flip>False</Flip>
+</ServiceConfig>
