@@ -19,6 +19,8 @@ def ExtractConfig(filepath):
 			config_dict['Resolution'] = ast.literal_eval(level1_elm.text)
 		elif level1_elm.tag == 'WriteTimestamp':
 			config_dict['WriteTimestamp'] = ast.literal_eval(level1_elm.text)
+		elif level1_elm.tag == 'Flip':
+			config_dict['Flip'] = ast.literal_eval(level1_elm.text)
 	return config_dict
 	
 def WriteTimestamp(image):
@@ -42,6 +44,8 @@ def index():
 def gen(vid_stream):
 	while True:
 		frame = vid_stream.read()
+		if config['Flip'] == True:
+			frame = cv2.flip(frame, 0)
 		if config['WriteTimestamp'] == True:
 			WriteTimestamp(frame)
 		ret, jpeg = cv2.imencode('.jpg', frame)
