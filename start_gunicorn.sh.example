@@ -1,3 +1,4 @@
 #!/bin/bash
 source /home/sebastien/.virtualenvs/camera_stream/bin/activate
+cd /home/sebastien/projects/rpi_camera_stream
 gunicorn service:app --bind="0.0.0.0:5000" --workers=1
