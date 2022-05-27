@@ -21,6 +21,8 @@ def ExtractConfig(filepath):
 			config_dict['WriteTimestamp'] = ast.literal_eval(level1_elm.text)
 		elif level1_elm.tag == 'Flip':
 			config_dict['Flip'] = ast.literal_eval(level1_elm.text)
+		elif level1_elm.tag == 'StillImageName':
+			config_dict['StillImageName'] = level1_elm.text
 	return config_dict
 	
 def WriteTimestamp(image):
@@ -48,16 +50,28 @@ def gen(vid_stream):
 			frame = cv2.flip(frame, 0)
 		if config['WriteTimestamp'] == True:
 			WriteTimestamp(frame)
+		
 		ret, jpeg = cv2.imencode('.jpg', frame)
 		frame = jpeg.tobytes()
 		yield(b'--frame\r\n'
-		      b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n\r\n')
+			  b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n\r\n')
 		      
 @app.route(f"/{config['VideoFeedName']}")
 def video_feed():
 	return Response(gen(video_stream), mimetype='multipart/x-mixed-replace; boundary=frame')
+	
 
-
+@app.route(f"/{config['StillImageName']}")
+def still_capture():
+	frame = video_stream.read()
+	if config['Flip'] == True:
+			frame = cv2.flip(frame, 0)
+	if config['WriteTimestamp'] == True:
+		WriteTimestamp(frame)
+	ret, png = cv2.imencode('.png', frame)
+	frame = png.tobytes()
+	return Response(frame)
+	
 
 	
 if __name__ == '__main__':
