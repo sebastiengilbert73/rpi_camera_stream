@@ -15,6 +15,8 @@ def ExtractConfig(filepath):
 	for level1_elm in root_elm:
 		if level1_elm.tag == 'VideoFeedName':
 			config_dict['VideoFeedName'] = level1_elm.text
+		elif level1_elm.tag == 'VideoFrameRate':
+			config_dict['VideoFrameRate'] = int(level1_elm.text)
 		elif level1_elm.tag == 'Resolution':
 			config_dict['Resolution'] = ast.literal_eval(level1_elm.text)
 		elif level1_elm.tag == 'WriteTimestamp':
@@ -37,7 +39,7 @@ app = Flask(__name__)
 
 config = ExtractConfig("./service_config.xml")
 
-video_stream = PiVideoStream(resolution=config['Resolution']).start()
+video_stream = PiVideoStream(resolution=config['Resolution'], framerate=config['VideoFrameRate']).start()
 
 @app.route('/')
 def index():
