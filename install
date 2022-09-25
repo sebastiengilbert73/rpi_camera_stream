@@ -1,3 +1,8 @@
-pip3 install opencv-contrib-python==4.5.5.62
-sudo apt-get install libatlas-base-dev
-
+$ sudo apt update
+$ sudo apt-get install -y libhdf5-dev libhdf5-serial-dev python3-pyqt5 libatlas-base-dev libjasper-dev
+$ pip install --upgrade pip setuptools wheel
+$ pip install opencv-contrib-python==4.5.5.62
+$ pip install gunicorn  # Important: Otherwise, the system-wide version of gunicorn (installed with sudo apt-get install gunicorn) will be used, and the virtual environment will be ignored at run-time
+$ pip install picamera
+$ pip install flask
+$ pip install imutils

@@ -1,9 +1,9 @@
 Installation of OpenCV on RPi 2:
 Cf. https://singleboardblog.com/install-python-opencv-on-raspberry-pi/
-$ sudo apt update
-$ pip install --upgrade pip setuptools wheel
-$ sudo apt-get install -y libhdf5-dev libhdf5-serial-dev python3-pyqt5 libatlas-base-dev libjasper-dev
-$ pip install --no-cache-dir opencv-contrib-python==4.5.3.56
+
+
+Virtual environment: use 
+	$ virtualenv -p python rpi_camera_stream
 
 To launch start_gunicorn.sh on startup:
 $ sudo nano /etc/rc.local
